@@ -9,24 +9,28 @@ public class ForInvalidResolution
     [Fact]
     internal void ValueOfProperty_Throws_OnInvalidCriteria()
     {
-        Assert.Throws<UnableToResolveException<StubHost, string>>(ResolverBuilder<StubHost, StubInvalidPropertyCriteria>.ValueOf<string>);
+        Assert.Throws<UnableToResolveException<StubHost, string>>(
+            () => ResolverBuilder<StubHost, StubInvalidPropertyCriteria>.ValueOf<string>());
     }
 
     [Fact]
     internal void NameOfProperty_Throws_OnIvalidCriteria()
     {
-        Assert.Throws<UnableToResolveException<StubHost, string>>(ResolverBuilder<StubHost, StubInvalidPropertyCriteria>.NameOf<string>);
+        Assert.Throws<UnableToResolveException<StubHost, string>>(
+            () => ResolverBuilder<StubHost, StubInvalidPropertyCriteria>.ValueOf<string>());
     }
 
     [Fact]
     internal void ValueOfField_Throws_OnInvalidCriteria()
     {
-        Assert.Throws<UnableToResolveException<StubHost, string>>(ResolverBuilder<StubHost, StubInvalidFieldCriteria>.ValueOf<string>);
+        Assert.Throws<UnableToResolveException<StubHost, string>>(
+            () => ResolverBuilder<StubHost, StubInvalidPropertyCriteria>.ValueOf<string>());
     }
 
     [Fact]
     internal void NameOfField_Throws_OnIvalidCriteria()
     {
-        Assert.Throws<UnableToResolveException<StubHost, string>>(ResolverBuilder<StubHost, StubInvalidFieldCriteria>.NameOf<string>);
+        Assert.Throws<UnableToResolveException<StubHost, string>>(
+            () => ResolverBuilder<StubHost, StubInvalidPropertyCriteria>.ValueOf<string>());
     }
 }

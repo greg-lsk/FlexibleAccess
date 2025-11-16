@@ -4,4 +4,7 @@ internal class StubHost
 {
     internal readonly static string stubPrivateString = string.Empty;
     internal static string StubPropertyName => stubPrivateString;
+
+
+    internal string StubName = "Vaermina";
 }

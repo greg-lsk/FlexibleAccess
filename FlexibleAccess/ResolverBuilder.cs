@@ -11,9 +11,16 @@ public static class ResolverBuilder<THost, TCriteria> where TCriteria : struct, 
     {
         var memberInfo = TryGetMemberInfo<TResult>();
 
-        var memberAccess = Expression.MakeMemberAccess(null, memberInfo);
+        var instance = Expression.Parameter(typeof(THost), "host");
 
-        var lambda = Expression.Lambda<Resolver<THost, TResult>>(memberAccess);
+        var criteria = new TCriteria();
+        var memberAccess = (criteria.BindingFlags & BindingFlags.Static) == BindingFlags.Static
+                           ? Expression.MakeMemberAccess(null, memberInfo)
+                           : Expression.MakeMemberAccess(instance, memberInfo);
+
+        //var memberAccess = Expression.MakeMemberAccess(instance, memberInfo);
+
+        var lambda = Expression.Lambda<Resolver<THost, TResult>>(memberAccess, instance);
         return lambda.Compile();
     }
 
@@ -21,9 +28,10 @@ public static class ResolverBuilder<THost, TCriteria> where TCriteria : struct, 
     {
         var memberInfo = TryGetMemberInfo<TResult>();
 
+        var instance = Expression.Parameter(typeof(THost), "host");
         var memberName = Expression.Constant(memberInfo.Name);
 
-        var lambda = Expression.Lambda<Resolver<THost, string>>(memberName);
+        var lambda = Expression.Lambda<Resolver<THost, string>>(memberName, instance);
         return lambda.Compile();
     }
 
