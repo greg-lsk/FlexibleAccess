@@ -2,6 +2,6 @@
 
 internal class StubHost
 {
-    private readonly static string _stubPrivateString = string.Empty;
-    internal static string StubPropertyName => _stubPrivateString;
+    internal readonly static string stubPrivateString = string.Empty;
+    internal static string StubPropertyName => stubPrivateString;
 }

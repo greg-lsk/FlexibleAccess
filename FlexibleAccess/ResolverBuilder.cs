@@ -9,33 +9,41 @@ public static class ResolverBuilder<THost, TCriteria> where TCriteria : struct, 
 {
     public static Resolver<THost, TResult> ValueOf<TResult>()
     {
-        var propertyInfo = TryGetProperty<TResult>();
+        var memberInfo = TryGetMemberInfo<TResult>();
 
-        var propertyAccess = Expression.MakeMemberAccess(null, propertyInfo);
+        var memberAccess = Expression.MakeMemberAccess(null, memberInfo);
 
-        var lambda = Expression.Lambda<Resolver<THost, TResult>>(propertyAccess);
+        var lambda = Expression.Lambda<Resolver<THost, TResult>>(memberAccess);
         return lambda.Compile();
     }
 
     public static Resolver<THost, string> NameOf<TResult>()
     {
-        var propertyInfo = TryGetProperty<TResult>();
+        var memberInfo = TryGetMemberInfo<TResult>();
 
-        var propertyName = Expression.Constant(propertyInfo.Name);
+        var memberName = Expression.Constant(memberInfo.Name);
 
-        var lambda = Expression.Lambda<Resolver<THost, string>>(propertyName);
+        var lambda = Expression.Lambda<Resolver<THost, string>>(memberName);
         return lambda.Compile();
     }
 
-    private static PropertyInfo TryGetProperty<T>()
+
+    private static MemberInfo TryGetMemberInfo<T>()
     {
         var criteria = new TCriteria();
+        var createInfo = CreateFor(criteria.MemberKind);
 
-        return typeof(THost).GetProperty(criteria.Identifier, criteria.BindingFlags) 
+        return createInfo(criteria.Identifier, criteria.BindingFlags)
         ?? throw new UnableToResolveException<THost, T>
         (
             criteria.Identifier,
             criteria.BindingFlags
-        ); 
+        );
     }
+
+    private static Func<string, BindingFlags, MemberInfo?>  CreateFor(MemberKind memberKind) => memberKind switch
+    {
+        MemberKind.Property => typeof(THost).GetProperty,
+        MemberKind.Field => typeof(THost).GetField
+    };    
 }

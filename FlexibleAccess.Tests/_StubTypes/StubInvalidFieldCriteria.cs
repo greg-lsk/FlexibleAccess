@@ -3,8 +3,10 @@
 
 namespace FlexibleAccess.Tests._StubTypes;
 
-internal readonly struct StubInvalidCriteria : IResolutionCriteria
+internal readonly struct StubInvalidFieldCriteria : IResolutionCriteria
 {
     public string Identifier => StubPrimitives.InvalidPropertyNameForStubHost;
+    public MemberKind MemberKind => MemberKind.Field;
+
     public BindingFlags BindingFlags => StubPrimitives.StubBindingFlags;
 }
