@@ -5,11 +5,11 @@ using FlexibleAccess.Exceptions;
 
 namespace FlexibleAccess;
 
-public static class ResolverBuilder<THost>
+public static class ResolverBuilder<THost, TCriteria> where TCriteria : struct, IResolutionCriteria
 {
-    public static Resolver<THost, TResult> ValueOf<TResult>(string identifier)
+    public static Resolver<THost, TResult> ValueOf<TResult>()
     {
-        var propertyInfo = TryGetProperty<TResult>(identifier);
+        var propertyInfo = TryGetProperty<TResult>();
 
         var propertyAccess = Expression.MakeMemberAccess(null, propertyInfo);
 
@@ -17,9 +17,9 @@ public static class ResolverBuilder<THost>
         return lambda.Compile();
     }
 
-    public static Resolver<THost, string> NameOf<TResult>(string identifier)
+    public static Resolver<THost, string> NameOf<TResult>()
     {
-        var propertyInfo = TryGetProperty<TResult>(identifier);
+        var propertyInfo = TryGetProperty<TResult>();
 
         var propertyName = Expression.Constant(propertyInfo.Name);
 
@@ -27,12 +27,14 @@ public static class ResolverBuilder<THost>
         return lambda.Compile();
     }
 
-    private static PropertyInfo TryGetProperty<T>(string identifier)
+    private static PropertyInfo TryGetProperty<T>()
     {
-        return typeof(THost).GetProperty(identifier, BindingFlags.Static | BindingFlags.NonPublic) 
+        var criteria = new TCriteria();
+
+        return typeof(THost).GetProperty(criteria.Identifier, criteria.BindingFlags) 
         ?? throw new UnableToResolveException<THost, T>
         (
-            identifier,
+            criteria.Identifier,
             BindingFlags.Static,
             BindingFlags.NonPublic
         ); 
