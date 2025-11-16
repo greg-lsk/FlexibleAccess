@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="FlexibleAccess.Tests/FlexibleAccess.Tests.csproj" />
+  <Project Path="FlexibleAccess/FlexibleAccess.csproj" />
+</Solution>
