@@ -31,11 +31,11 @@ public sealed class UnableToResolveException<THost, TResult> : Exception
     $"target:: {JoinFlags(flags)} {ShortenTypeOf<TResult>()} {targetIdentifier}\n" +
     $"source:: {ShortenTypeOf<THost>()}\n" +
     $"\n" +
-    $"target-verbose:: {typeof(TResult)}" +
+    $"target-verbose:: {typeof(TResult)}\n" +
     $"source-verbose:: {typeof(THost)}\n";
 
 
-    private static string Reason() => "Couldn't resolve";
+    private static string Reason() => "Couldn't resolve Property";
     private static string ShortenTypeOf<T>() => typeof(T).Name.Split('.').Last();
     private static string JoinFlags(IEnumerable<BindingFlags> flags) => string.Join(", ", flags.Select(f => f.ToString()));
 }
