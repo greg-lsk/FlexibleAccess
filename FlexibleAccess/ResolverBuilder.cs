@@ -35,8 +35,7 @@ public static class ResolverBuilder<THost, TCriteria> where TCriteria : struct, 
         ?? throw new UnableToResolveException<THost, T>
         (
             criteria.Identifier,
-            BindingFlags.Static,
-            BindingFlags.NonPublic
+            criteria.BindingFlags
         ); 
     }
 }
