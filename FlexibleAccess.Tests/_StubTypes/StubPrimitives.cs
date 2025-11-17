@@ -2,6 +2,14 @@
 
 namespace FlexibleAccess.Tests._StubTypes;
 
+
+internal enum StubEnum
+{
+    stubEnumValue01,
+    stubEnumValue02,
+    stubEnumValue03
+}
+
 internal static class StubPrimitives
 {
     internal const string InternalStatic_StubField_Value = "InternalStatic_StubField_Value";
@@ -19,4 +27,7 @@ internal static class StubPrimitives
 
     internal const BindingFlags Flag_NonPublic_Static = BindingFlags.NonPublic | BindingFlags.Static;
     internal const BindingFlags Flag_NonPublic_Instance = BindingFlags.NonPublic | BindingFlags.Instance;
+
+    internal const int StubEnum_InvalidValue = 50;
+    internal const int MemberKindEnum_InvalidValue = 9990;
 }

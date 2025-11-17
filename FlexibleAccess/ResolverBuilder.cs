@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Linq.Expressions;
 using FlexibleAccess.Exceptions;
+using FlexibleAccess._Internals.MemberInfoRetrieval;
 
 
 namespace FlexibleAccess;
@@ -37,19 +38,9 @@ public static class ResolverBuilder<THost, TCriteria> where TCriteria : struct, 
     private static MemberInfo TryGetMemberInfo<T>()
     {
         var criteria = new TCriteria();
-        var createInfo = CreateFor(criteria.MemberKind);
+        var memberInfoRetrieval = MemberInfoRetrievalLogic.For<THost>(criteria.MemberKind);
 
-        return createInfo(criteria.Identifier, criteria.BindingFlags)
-        ?? throw new UnableToResolveException<THost, T>
-        (
-            criteria.Identifier,
-            criteria.BindingFlags
-        );
-    }
-
-    private static Func<string, BindingFlags, MemberInfo?>  CreateFor(MemberKind memberKind) => memberKind switch
-    {
-        MemberKind.Property => typeof(THost).GetProperty,
-        MemberKind.Field => typeof(THost).GetField
-    };    
+        return memberInfoRetrieval(criteria.Identifier, criteria.BindingFlags)
+        ?? throw new UnableToResolveException<THost, T>(criteria.Identifier, criteria.BindingFlags);
+    }    
 }
