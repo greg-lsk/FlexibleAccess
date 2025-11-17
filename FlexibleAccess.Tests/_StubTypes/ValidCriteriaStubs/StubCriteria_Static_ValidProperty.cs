@@ -3,7 +3,7 @@
 
 namespace FlexibleAccess.Tests._StubTypes.ValidCriteriaStubs;
 
-internal readonly struct StubCriteria_ValidProperty : IResolutionCriteria
+internal readonly struct StubCriteria_Static_ValidProperty : IResolutionCriteria
 {
     public string Identifier => StubPrimitives.IdentifierFor_InternalStatic_StubProperty_Valid;
     public MemberKind MemberKind => MemberKind.Property;

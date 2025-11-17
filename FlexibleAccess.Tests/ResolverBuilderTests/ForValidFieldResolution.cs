@@ -4,31 +4,13 @@ using FlexibleAccess.Tests._StubTypes.ValidCriteriaStubs;
 
 namespace FlexibleAccess.Tests.ResolverBuilderTests;
 
-public class ForValidResolution
+public class ForValidFieldResolution
 {
-    [Fact]
-    internal void ValueOfProperty_ResolverReturns_Expected_OnValidCriteria()
-    {
-        var host = new StubHost();
-        var resolver = ResolverBuilder<StubHost, StubCriteria_ValidProperty>.ValueOf<string>();
-
-        Assert.Equal(StubHost.InternalStatic_StubProperty, resolver());
-    }
-
-    [Fact]
-    internal void NameOfProperty_ResolverReturns_Expected_OnValidCriteria()
-    {
-        var host = new StubHost();
-        var resolver = ResolverBuilder<StubHost, StubCriteria_ValidProperty>.NameOf<string>();
-
-        Assert.Equal(nameof(StubHost.InternalStatic_StubProperty), resolver());
-    }
-
     [Fact]
     internal void ValueOfField_ResolverReturns_Expected_OnValidCriteria()
     {
         var host = new StubHost();
-        var resolver = ResolverBuilder<StubHost, StubCriteria_ForValidField>.ValueOf<string>();
+        var resolver = ResolverBuilder<StubHost, StubCriteria_Static_ValidField>.ValueOf<string>();
 
         Assert.Equal(StubHost.InternalStatic_StubField, resolver());
     }
@@ -37,7 +19,7 @@ public class ForValidResolution
     internal void NameOfField_ResolverReturns_Expected_OnValidCriteria()
     {
         var host = new StubHost();
-        var resolver = ResolverBuilder<StubHost, StubCriteria_ForValidField>.NameOf<string>();
+        var resolver = ResolverBuilder<StubHost, StubCriteria_Static_ValidField>.NameOf<string>();
 
         Assert.Equal(nameof(StubHost.InternalStatic_StubField), resolver());
     }
@@ -48,7 +30,7 @@ public class ForValidResolution
         var host = new StubHost();
         var resolver = ResolverBuilder<StubHost, StubCriteria_Instanced_ValidField>.ValueOf<string>();
 
-        Assert.Equal(host.StubName, resolver(host));
+        Assert.Equal(host.InternalInstance_StubField, resolver(host));
     }
 
     [Fact]
@@ -57,6 +39,6 @@ public class ForValidResolution
         var host = new StubHost();
         var resolver = ResolverBuilder<StubHost, StubCriteria_Instanced_ValidField>.NameOf<string>();
 
-        Assert.Equal(nameof(StubHost.StubName), resolver(host));
+        Assert.Equal(nameof(StubHost.InternalInstance_StubField), resolver(host));
     }
 }

@@ -7,4 +7,5 @@ internal class StubHost
 
 
     internal readonly string InternalInstance_StubField = StubPrimitives.InternalInstance_StubField_Value;
+    internal string InternalInstance_StubProperty => InternalInstance_StubField;
 }

@@ -11,11 +11,11 @@ public class ForUnableToResolveException
     [Fact]
     internal void HasExpected_TargetIdentifier()
     {
-        var stubInvalidCriteria = new StubCriteria_ForInvalidProperty();
+        var stubInvalidCriteria = new StubCriteria_Static_InvalidProperty();
         var expected = stubInvalidCriteria.Identifier;
 
         var thrownException = Assert.Throws<UnableToResolveException<StubHost, string>>(
-            () => ResolverBuilder<StubHost, StubCriteria_ForInvalidProperty>.ValueOf<string>());
+            () => ResolverBuilder<StubHost, StubCriteria_Static_InvalidProperty>.ValueOf<string>());
         var thrown = thrownException.TargetIdentifier;
 
         Assert.Equal(expected, thrown);
@@ -24,11 +24,11 @@ public class ForUnableToResolveException
     [Fact]
     internal void HasExpected_BindingFlags()
     {
-        var stubInvalidCriteria = new StubCriteria_ForInvalidProperty();
+        var stubInvalidCriteria = new StubCriteria_Static_InvalidProperty();
         var expected = stubInvalidCriteria.BindingFlags;
 
         var thrownException = Assert.Throws<UnableToResolveException<StubHost, string>>(
-            () => ResolverBuilder<StubHost, StubCriteria_ForInvalidProperty>.ValueOf<string>());
+            () => ResolverBuilder<StubHost, StubCriteria_Static_InvalidProperty>.ValueOf<string>());
         var thrown = thrownException.BindingFlags;
 
         Assert.Equal(expected, thrown);
@@ -37,11 +37,11 @@ public class ForUnableToResolveException
     [Fact]
     internal void HasExpected_Message()
     {
-        var stubInvalidCriteria = new StubCriteria_ForInvalidProperty();
+        var stubInvalidCriteria = new StubCriteria_Static_InvalidProperty();
         var expected = CreateMessage<StubHost, string>(stubInvalidCriteria.Identifier, stubInvalidCriteria.BindingFlags);
 
         var thrownException = Assert.Throws<UnableToResolveException<StubHost, string>>(
-            () => ResolverBuilder<StubHost, StubCriteria_ForInvalidProperty>.ValueOf<string>());
+            () => ResolverBuilder<StubHost, StubCriteria_Static_InvalidProperty>.ValueOf<string>());
         var thrown = thrownException.Message;
 
         Assert.Equal(expected, thrown);
