@@ -10,8 +10,8 @@ public class ForInstantiation
     {
         var stubCriteria = new StubValidPropertyCriteria();
 
-        var expectedPropertyName = nameof(StubHost.StubPropertyName);
-        var expectedBindingFlags = StubPrimitives.StubBindingFlags;
+        var expectedPropertyName = nameof(StubHost.InternalStatic_StubProperty);
+        var expectedBindingFlags = StubPrimitives.Flag_NonPublic_Static;
 
         Assert.Equal(expectedPropertyName, stubCriteria.Identifier);
         Assert.Equal(expectedBindingFlags, stubCriteria.BindingFlags);

@@ -2,9 +2,9 @@
 
 internal class StubHost
 {
-    internal readonly static string stubPrivateString = string.Empty;
-    internal static string StubPropertyName => stubPrivateString;
+    internal readonly static string InternalStatic_StubField = StubPrimitives.InternalStatic_StubField_Value;
+    internal static string InternalStatic_StubProperty => InternalStatic_StubField;
 
 
-    internal string StubName = "Vaermina";
+    internal readonly string InternalInstance_StubField = StubPrimitives.InternalInstance_StubField_Value;
 }
