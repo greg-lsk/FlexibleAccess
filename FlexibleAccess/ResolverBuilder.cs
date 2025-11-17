@@ -18,8 +18,6 @@ public static class ResolverBuilder<THost, TCriteria> where TCriteria : struct, 
                            ? Expression.MakeMemberAccess(null, memberInfo)
                            : Expression.MakeMemberAccess(instance, memberInfo);
 
-        //var memberAccess = Expression.MakeMemberAccess(instance, memberInfo);
-
         var lambda = Expression.Lambda<Resolver<THost, TResult>>(memberAccess, instance);
         return lambda.Compile();
     }
