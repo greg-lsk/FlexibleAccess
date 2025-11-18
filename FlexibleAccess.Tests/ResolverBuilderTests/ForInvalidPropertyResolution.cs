@@ -18,7 +18,7 @@ public class ForInvalidPropertyResolution
     internal void NameOfProperty_Throws_OnIvalidCriteria()
     {
         Assert.Throws<UnableToResolveException<StubHost, string>>(
-            () => ResolverBuilder<StubHost, StubCriteria_Static_InvalidProperty>.ValueOf<string>());
+            () => ResolverBuilder<StubHost, StubCriteria_Static_InvalidProperty>.NameOf<string>());
     }
 
     [Fact]
@@ -32,6 +32,6 @@ public class ForInvalidPropertyResolution
     internal void NameOfInstancedProperty_Throws_OnIvalidCriteria()
     {
         Assert.Throws<UnableToResolveException<StubHost, string>>(
-            () => ResolverBuilder<StubHost, StubCriteria_Instanced_InvalidProperty>.ValueOf<string>());
+            () => ResolverBuilder<StubHost, StubCriteria_Instanced_InvalidProperty>.NameOf<string>());
     }
 }

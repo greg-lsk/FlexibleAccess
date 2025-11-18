@@ -2,6 +2,8 @@
 using System.Linq.Expressions;
 using FlexibleAccess.Exceptions;
 using FlexibleAccess._Internals.MemberInfoRetrieval;
+using FlexibleAccess._Internals.InvalidInstanceHandling;
+using FlexibleAccess._Internals.ResolutionCriteriaProcessing;
 
 
 namespace FlexibleAccess;
@@ -14,12 +16,13 @@ public static class ResolverBuilder<THost, TCriteria> where TCriteria : struct, 
 
         var instance = Expression.Parameter(typeof(THost), "host");
 
-        var criteria = new TCriteria();
-        var memberAccess = (criteria.BindingFlags & BindingFlags.Static) == BindingFlags.Static
-                           ? Expression.MakeMemberAccess(null, memberInfo)
-                           : Expression.MakeMemberAccess(instance, memberInfo);
+        Expression lambdaBody = CriteriaProcessor<TCriteria>.IndicatesOnTypeResolution() switch
+        {
+            true  => Expression.MakeMemberAccess(null, memberInfo),
+            false => GetBlockExpression(Expression.MakeMemberAccess(instance, memberInfo), instance)
+        };
 
-        var lambda = Expression.Lambda<Resolver<THost, TResult>>(memberAccess, instance);
+        var lambda = Expression.Lambda<Resolver<THost, TResult>>(lambdaBody, instance);
         return lambda.Compile();
     }
 
@@ -42,5 +45,19 @@ public static class ResolverBuilder<THost, TCriteria> where TCriteria : struct, 
 
         return memberInfoRetrieval(criteria.Identifier, criteria.BindingFlags)
         ?? throw new UnableToResolveException<THost, T>(criteria.Identifier, criteria.BindingFlags);
-    }    
+    }
+    
+    private static BlockExpression GetBlockExpression(MemberExpression memberExpression,
+                                                      ParameterExpression parameterExpression)
+    {
+        var methodName = typeof(THost).IsValueType ? nameof(InvalidInstanceHandler<TCriteria>.ValueType) 
+                                                   : nameof(InvalidInstanceHandler<TCriteria>.ReferenceType);
+
+        var methodInfo = typeof(InvalidInstanceHandler<TCriteria>).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic)!
+                                                                  .MakeGenericMethod(typeof(THost));
+
+        var methodcall = Expression.Call(methodInfo, parameterExpression);
+
+        return Expression.Block(methodcall, memberExpression);
+    }
 }

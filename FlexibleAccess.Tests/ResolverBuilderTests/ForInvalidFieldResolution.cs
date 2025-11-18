@@ -18,7 +18,7 @@ public class ForInvalidFieldResolution
     internal void NameOfField_Throws_OnIvalidCriteria()
     {
         Assert.Throws<UnableToResolveException<StubHost, string>>(
-            () => ResolverBuilder<StubHost, StubCriteria_Static_InvalidField>.ValueOf<string>());
+            () => ResolverBuilder<StubHost, StubCriteria_Static_InvalidField>.NameOf<string>());
     }
 
     [Fact]
@@ -32,6 +32,6 @@ public class ForInvalidFieldResolution
     internal void NameOfInstancedField_Throws_OnIvalidCriteria()
     {
         Assert.Throws<UnableToResolveException<StubHost, string>>(
-            () => ResolverBuilder<StubHost, StubCriteria_Instanced_InvalidField>.ValueOf<string>());
+            () => ResolverBuilder<StubHost, StubCriteria_Instanced_InvalidField>.NameOf<string>());
     }
 }
