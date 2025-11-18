@@ -8,14 +8,14 @@ namespace FlexibleAccess.Tests.ResolverBuilderTests;
 public class ForInvalidFieldResolution
 {
     [Fact]
-    internal void ValueOfField_Throws_OnInvalidCriteria()
+    internal void ValueOfStaticField_Throws_OnInvalidCriteria()
     {
         Assert.Throws<UnableToResolveException<StubHost, string>>(
             () => ResolverBuilder<StubHost, StubCriteria_Static_InvalidField>.ValueOf<string>());
     }
 
     [Fact]
-    internal void NameOfField_Throws_OnIvalidCriteria()
+    internal void NameOfStaticField_Throws_OnIvalidCriteria()
     {
         Assert.Throws<UnableToResolveException<StubHost, string>>(
             () => ResolverBuilder<StubHost, StubCriteria_Static_InvalidField>.NameOf<string>());

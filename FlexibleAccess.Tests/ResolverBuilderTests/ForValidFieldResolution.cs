@@ -7,7 +7,7 @@ namespace FlexibleAccess.Tests.ResolverBuilderTests;
 public class ForValidFieldResolution
 {
     [Fact]
-    internal void ValueOfField_ResolverReturns_Expected_OnValidCriteria()
+    internal void ValueOfStaticField_ResolverReturns_Expected_OnValidCriteria()
     {
         var host = new StubHost();
         var resolver = ResolverBuilder<StubHost, StubCriteria_Static_ValidField>.ValueOf<string>();
@@ -16,7 +16,7 @@ public class ForValidFieldResolution
     }
 
     [Fact]
-    internal void NameOfField_ResolverReturns_Expected_OnValidCriteria()
+    internal void NameOfStaticField_ResolverReturns_Expected_OnValidCriteria()
     {
         var host = new StubHost();
         var resolver = ResolverBuilder<StubHost, StubCriteria_Static_ValidField>.NameOf<string>();

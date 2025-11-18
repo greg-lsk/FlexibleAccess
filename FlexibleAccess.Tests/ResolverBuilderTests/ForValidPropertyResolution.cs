@@ -7,7 +7,7 @@ namespace FlexibleAccess.Tests.ResolverBuilderTests;
 public class ForValidPropertyResolution
 {
     [Fact]
-    internal void ValueOfProperty_ResolverReturns_Expected_OnValidCriteria()
+    internal void ValueOfStaticProperty_ResolverReturns_Expected_OnValidCriteria()
     {
         var host = new StubHost();
         var resolver = ResolverBuilder<StubHost, StubCriteria_Static_ValidProperty>.ValueOf<string>();
@@ -16,7 +16,7 @@ public class ForValidPropertyResolution
     }
 
     [Fact]
-    internal void NameOfProperty_ResolverReturns_Expected_OnValidCriteria()
+    internal void NameOfStaticProperty_ResolverReturns_Expected_OnValidCriteria()
     {
         var host = new StubHost();
         var resolver = ResolverBuilder<StubHost, StubCriteria_Static_ValidProperty>.NameOf<string>();
