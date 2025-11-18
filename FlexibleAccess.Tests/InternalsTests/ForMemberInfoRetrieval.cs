@@ -12,7 +12,7 @@ public class ForMemberInfoRetrieval
     {
         var kind = MemberKind.Property;
         var expectedLogic = "GetProperty";
-        var calculatedRetievalLogic = MemberInfoRetrievalLogic.For<StubHost>(kind);
+        var calculatedRetievalLogic = MemberInfoRetrievalLogic.For<StubHost_ConcreteClass>(kind);
 
         Assert.Equal(expectedLogic, calculatedRetievalLogic.Method.Name);
     }
@@ -22,7 +22,7 @@ public class ForMemberInfoRetrieval
     {
         var kind = MemberKind.Field;
         var expectedLogic = "GetField";
-        var calculatedRetievalLogic = MemberInfoRetrievalLogic.For<StubHost>(kind);
+        var calculatedRetievalLogic = MemberInfoRetrievalLogic.For<StubHost_ConcreteClass>(kind);
 
         Assert.Equal(expectedLogic, calculatedRetievalLogic.Method.Name);
     }
@@ -32,7 +32,7 @@ public class ForMemberInfoRetrieval
     {
         Assert.Throws<InvalidEnumValueException<MemberKind>>
         (
-            () => MemberInfoRetrievalLogic.For<StubHost>((MemberKind)StubPrimitives.MemberKindEnum_InvalidValue)
+            () => MemberInfoRetrievalLogic.For<StubHost_ConcreteClass>((MemberKind)StubPrimitives.MemberKindEnum_InvalidValue)
         );
     }
 }

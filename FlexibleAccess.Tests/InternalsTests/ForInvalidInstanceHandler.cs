@@ -45,18 +45,18 @@ public class ForInvalidInstanceHandler
     [Fact]
     internal void ReferenceType_ThrowsOn_NoInstance()
     {
-        Assert.Throws<MissingInstanceAtRuntimeException<StubHost, StubCriteria_Instanced_InvalidField>>
+        Assert.Throws<MissingInstanceAtRuntimeException<StubHost_ConcreteClass, StubCriteria_Instanced_InvalidField>>
         (
-            () => InvalidInstanceHandler<StubCriteria_Instanced_InvalidField>.ReferenceType<StubHost>()
+            () => InvalidInstanceHandler<StubCriteria_Instanced_InvalidField>.ReferenceType<StubHost_ConcreteClass>()
         );
     }
 
     [Fact]
     internal void ReferenceType_ThrowsOn_NullInstance()
     {
-        StubHost? stub = null;
+        StubHost_ConcreteClass? stub = null;
 
-        Assert.Throws<MissingInstanceAtRuntimeException<StubHost, StubCriteria_Instanced_InvalidField>>
+        Assert.Throws<MissingInstanceAtRuntimeException<StubHost_ConcreteClass, StubCriteria_Instanced_InvalidField>>
         (
             () => InvalidInstanceHandler<StubCriteria_Instanced_InvalidField>.ReferenceType(stub)
         );
@@ -65,7 +65,7 @@ public class ForInvalidInstanceHandler
     [Fact]
     internal void ReferenceType_NotThrows_WhenInstanceProvided()
     {
-        StubHost stub = new();
+        StubHost_ConcreteClass stub = new();
         try
         {
             InvalidInstanceHandler<StubCriteria_Instanced_InvalidField>.ReferenceType(stub);
