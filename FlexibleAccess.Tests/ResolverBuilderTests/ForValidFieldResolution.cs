@@ -1,4 +1,4 @@
-﻿using FlexibleAccess.Tests._StubTypes;
+﻿using FlexibleAccess.Tests._StubTypes.StubHost;
 using FlexibleAccess.Tests._StubTypes.ValidCriteriaStubs;
 
 

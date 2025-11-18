@@ -1,6 +1,6 @@
 ﻿using FlexibleAccess.Exceptions;
-using FlexibleAccess.Tests._StubTypes;
 using FlexibleAccess.Tests._StubTypes.InvalidCriteriaStub;
+using FlexibleAccess.Tests._StubTypes.StubHost;
 
 
 namespace FlexibleAccess.Tests.ResolverBuilderTests;

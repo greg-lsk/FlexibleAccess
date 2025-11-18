@@ -1,6 +1,7 @@
 ﻿using FlexibleAccess.Exceptions;
 using FlexibleAccess.Tests._StubTypes;
 using FlexibleAccess._Internals.MemberInfoRetrieval;
+using FlexibleAccess.Tests._StubTypes.StubHost;
 
 
 namespace FlexibleAccess.Tests.InternalsTests;
