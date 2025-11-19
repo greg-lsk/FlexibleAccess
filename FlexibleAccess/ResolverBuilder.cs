@@ -14,15 +14,26 @@ public static class ResolverBuilder<THost, TCriteria> where TCriteria : struct, 
     {
         var memberInfo = TryGetMemberInfo<TResult>();
 
-        var instance = Expression.Parameter(typeof(THost), "host");
+        var instance = typeof(THost).IsValueType switch 
+        {
+            true  => Expression.Parameter(typeof(Nullable<>).MakeGenericType(typeof(THost)), "host"),
+            false => Expression.Parameter(typeof(THost), "host")
+        };
+
+        var memberAccess = (CriteriaProcessor<TCriteria>.IndicatesOnTypeResolution(), typeof(THost).IsValueType) switch
+        {   
+            (true, _)      => Expression.MakeMemberAccess(null, memberInfo),
+            (false, true)  => Expression.MakeMemberAccess(Expression.Property(instance, "Value"), memberInfo),
+            (false, false) => Expression.MakeMemberAccess(instance, memberInfo)
+        };
 
         Expression lambdaBody = CriteriaProcessor<TCriteria>.IndicatesOnTypeResolution() switch
         {
-            true  => Expression.MakeMemberAccess(null, memberInfo),
+            true  => memberAccess,
             false => Expression.Block
             (
-                InstanceHandlingExpression(instance),
-                Expression.MakeMemberAccess(instance, memberInfo)
+                Expression.Call(InstanceHandlingExpression(), instance),
+                memberAccess
             )
         };
 
@@ -51,27 +62,12 @@ public static class ResolverBuilder<THost, TCriteria> where TCriteria : struct, 
         ?? throw new UnableToResolveException<THost, T>(criteria.Identifier, criteria.BindingFlags);
     }
     
-    private static MethodCallExpression InstanceHandlingExpression(ParameterExpression parameterExpression)
+    private static MethodInfo InstanceHandlingExpression()
     {
         var methodName = typeof(THost).IsValueType ? nameof(InvalidInstanceHandler<TCriteria>.ValueType)
                                                    : nameof(InvalidInstanceHandler<TCriteria>.ReferenceType);
 
-        var methodInfo = typeof(InvalidInstanceHandler<TCriteria>).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic)!
-                                                                  .MakeGenericMethod(typeof(THost));
-
-        return (typeof(THost).IsValueType, typeof(THost) == typeof(Nullable<>)) switch
-        {
-            (false, _)    => Expression.Call(methodInfo, parameterExpression),
-            (true, true)  => Expression.Call(methodInfo, parameterExpression),
-            (true, false) => Expression.Call(methodInfo, AsNullable(parameterExpression))
-        };
-    }
-
-    private static NewExpression AsNullable(ParameterExpression parameterExpression)
-    {
-        var nullableType = typeof(Nullable<>).MakeGenericType(typeof(THost));
-        var ctorInfo = nullableType.GetConstructor([typeof(THost)]);
-
-        return Expression.New(ctorInfo, parameterExpression);
+        return typeof(InvalidInstanceHandler<TCriteria>).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic)!
+                                                        .MakeGenericMethod(typeof(THost));
     }
 }
