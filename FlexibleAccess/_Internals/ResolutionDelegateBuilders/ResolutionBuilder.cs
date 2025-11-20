@@ -4,10 +4,10 @@ using FlexibleAccess._Internals.ReflectionHandling;
 
 namespace FlexibleAccess._Internals.ResolutionDelegateBuilders;
 
-internal static class ResolutionDelegateBuilder<THost, TTarget, TCriteria>
+internal static class ResolutionBuilder<THost, TTarget, TCriteria>
     where TCriteria : struct, IResolutionCriteria
 {
-    internal static TResolution ValueOfResolution<TResolution>() 
+    internal static TResolution ForValueResolution<TResolution>() 
         where TResolution : class, IResolution<THost, TTarget, TCriteria>
     {
         var memberInfo = ReflectionHandler.TryGetMemberInfo<THost, TTarget, TCriteria>();
@@ -22,7 +22,7 @@ internal static class ResolutionDelegateBuilder<THost, TTarget, TCriteria>
         return (TResolution) resolution;
     }
 
-    internal static TResolution NameOfResolution<TResolution>() 
+    internal static TResolution ForNameResolution<TResolution>() 
         where TResolution : class, IResolution<THost, string, TCriteria>
     {
         var memberInfo = ReflectionHandler.TryGetMemberInfo<THost, TTarget, TCriteria>();
@@ -34,6 +34,6 @@ internal static class ResolutionDelegateBuilder<THost, TTarget, TCriteria>
         var resolutionDelegate = ExpressionHandler.GetCompiledLambda<Func<THost, string>>(memberName, delegateParameter);
 
         var resolution = ReflectionHandler.GetResolutionInstance(resolutionType, resolutionDelegate);
-        return (TResolution)resolution;
+        return (TResolution) resolution;
     }
 }
