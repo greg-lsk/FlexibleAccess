@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using FlexibleAccess.Exceptions;
+using FlexibleAccess.Resolution;
 using FlexibleAccess._Internals.InvalidInstanceHandling;
 
 
@@ -25,5 +26,27 @@ internal static class ReflectionHandler
 
         return typeof(InvalidInstanceHandler<TCriteria>).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic)!
                                                         .MakeGenericMethod(typeof(THost));
+    }
+
+    internal static Type GetResolutionType<THost, TResult, TCriteria>()
+        where TCriteria : struct, IResolutionCriteria
+    {
+        return typeof(THost).IsValueType switch
+        {
+            true => typeof(ResolutionOnStruct<,,>).MakeGenericType(typeof(THost), typeof(TResult), typeof(TCriteria)),
+            false => typeof(ResolutionOnClass<,,>).MakeGenericType(typeof(THost), typeof(TResult), typeof(TCriteria))
+        };
+    }
+
+    internal static object GetResolutionInstance<THost, TResult>(Type resolutionType,
+                                                                 Func<THost, TResult>? resolutionDelegate)
+    {
+        var resolutionCtor = resolutionType.GetConstructor
+        (
+            BindingFlags.Instance | BindingFlags.Public,
+            [typeof(Func<THost, TResult>)]
+        ) ?? throw new Exception("No suitable ctor found...");
+
+        return resolutionCtor.Invoke([resolutionDelegate]);
     }
 }

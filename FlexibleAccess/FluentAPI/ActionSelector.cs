@@ -5,13 +5,9 @@ namespace FlexibleAccess;
 
 public struct ActionSelector<THost, TCriteria> where TCriteria : struct, IResolutionCriteria
 {
-    public readonly Resolution<THost, TTarget, TCriteria> GetValueOf<TTarget>() => new
-    (
-        ResolutionDelegateBuilder<THost, TTarget, TCriteria>.ValueOfResolution<Func<THost?, TTarget>>()
-    );
+    public readonly IResolution<THost, TTarget, TCriteria> GetValueOf<TTarget>() => 
+        ResolutionDelegateBuilder<THost, TTarget, TCriteria>.ValueOfResolution<IResolution<THost, TTarget, TCriteria>>();
 
-    public readonly Resolution<THost, string, TCriteria> GetNameOf<TTarget>() => new
-    (
-        ResolutionDelegateBuilder<THost, TTarget, TCriteria>.NameOfResolution<Func<THost?, string>>()
-    );
+    public readonly IResolution<THost, string, TCriteria> GetNameOf<TTarget>() => 
+        ResolutionDelegateBuilder<THost, TTarget, TCriteria>.NameOfResolution<IResolution<THost, string, TCriteria>>();
 }
