@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using FlexibleAccess.Exceptions;
-using FlexibleAccess.Tests._StubTypes.InvalidCriteriaStub;
 using FlexibleAccess.Tests._StubTypes.StubHost;
+using FlexibleAccess.Tests._StubTypes.InvalidCriteriaStub;
 
 
 namespace FlexibleAccess.Tests.ExceptionsTests;
@@ -15,7 +15,7 @@ public class ForUnableToResolveException
         var expected = stubInvalidCriteria.Identifier;
 
         var thrownException = Assert.Throws<UnableToResolveException<StubHost_ConcreteClass, string>>(
-            () => ResolverBuilder<StubHost_ConcreteClass, StubCriteria_Static_InvalidProperty>.ValueOf<string>());
+            () => ResolutionOn<StubHost_ConcreteClass>.Using<StubCriteria_Static_InvalidProperty>().GetValueOf<string>());
         var thrown = thrownException.TargetIdentifier;
 
         Assert.Equal(expected, thrown);
@@ -28,7 +28,7 @@ public class ForUnableToResolveException
         var expected = stubInvalidCriteria.BindingFlags;
 
         var thrownException = Assert.Throws<UnableToResolveException<StubHost_ConcreteClass, string>>(
-            () => ResolverBuilder<StubHost_ConcreteClass, StubCriteria_Static_InvalidProperty>.ValueOf<string>());
+            () => ResolutionOn<StubHost_ConcreteClass>.Using<StubCriteria_Static_InvalidProperty>().GetValueOf<string>());
         var thrown = thrownException.BindingFlags;
 
         Assert.Equal(expected, thrown);
@@ -41,7 +41,7 @@ public class ForUnableToResolveException
         var expected = CreateMessage<StubHost_ConcreteClass, string>(stubInvalidCriteria.Identifier, stubInvalidCriteria.BindingFlags);
 
         var thrownException = Assert.Throws<UnableToResolveException<StubHost_ConcreteClass, string>>(
-            () => ResolverBuilder<StubHost_ConcreteClass, StubCriteria_Static_InvalidProperty>.ValueOf<string>());
+            () => ResolutionOn<StubHost_ConcreteClass>.Using<StubCriteria_Static_InvalidProperty>().GetValueOf<string>());
         var thrown = thrownException.Message;
 
         Assert.Equal(expected, thrown);

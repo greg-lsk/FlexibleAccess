@@ -13,43 +13,47 @@ public abstract class ForValidPropertyResolution<TStubHost> where TStubHost : IS
     internal void ValueOfStaticProperty_ResolverReturns_Expected_OnValidCriteria()
     {
         var host = StubHostFactory.Create<TStubHost>();
-        var resolver = ResolverBuilder<TStubHost, StubCriteria_Static_ValidProperty>.ValueOf<string>();
+        var resolver = ResolutionOn<TStubHost>.Using<StubCriteria_Static_ValidProperty>()
+                                              .GetValueOf<string>();
 
         var accessor = new AccessorWrapper<TStubHost>((TStubHost)host);
 
-        Assert.Equal(accessor.InternalStatic_StubProperty, resolver());
+        Assert.Equal(accessor.InternalStatic_StubProperty, resolver.Invoke());
     }
 
     [Fact]
     internal void NameOfStaticProperty_ResolverReturns_Expected_OnValidCriteria()
     {
         var host = StubHostFactory.Create<TStubHost>();
-        var resolver = ResolverBuilder<TStubHost, StubCriteria_Static_ValidProperty>.NameOf<string>();
+        var resolver = ResolutionOn<TStubHost>.Using<StubCriteria_Static_ValidProperty>()
+                                              .GetNameOf<string>();
 
         var accessor = new AccessorWrapper<TStubHost>((TStubHost)host);
 
-        Assert.Equal(nameof(accessor.InternalStatic_StubProperty), resolver());
+        Assert.Equal(nameof(accessor.InternalStatic_StubProperty), resolver.Invoke());
     }
 
     [Fact]
     internal void ValueOfInstancedProperty_ResolverReturns_Expected_OnValidCriteria()
     {
-        var host = StubHostFactory.Create<TStubHost>(); ;
-        var resolver = ResolverBuilder<TStubHost, StubCriteria_Instanced_ValidProperty>.ValueOf<string>();
+        var host = StubHostFactory.Create<TStubHost>();
+        var resolver = ResolutionOn<TStubHost>.Using<StubCriteria_Instanced_ValidProperty>()
+                                              .GetValueOf<string>();
 
         var accessor = new AccessorWrapper<TStubHost>((TStubHost)host);
 
-        Assert.Equal(accessor.InternalInstance_StubProperty, resolver((TStubHost)host));
+        Assert.Equal(accessor.InternalInstance_StubProperty, resolver.Invoke((TStubHost)host));
     }
 
     [Fact]
     internal void NameOfInstancedProperty_ResolverReturns_Expected_OnValidCriteria()
     {
-        var host = StubHostFactory.Create<TStubHost>(); ;
-        var resolver = ResolverBuilder<TStubHost, StubCriteria_Instanced_ValidProperty>.NameOf<string>();
+        var host = StubHostFactory.Create<TStubHost>();
+        var resolver = ResolutionOn<TStubHost>.Using<StubCriteria_Instanced_ValidProperty>()
+                                              .GetNameOf<string>();
 
         var accessor = new AccessorWrapper<TStubHost>((TStubHost)host);
 
-        Assert.Equal(nameof(accessor.InternalInstance_StubProperty), resolver((TStubHost)host));
+        Assert.Equal(nameof(accessor.InternalInstance_StubProperty), resolver.Invoke((TStubHost)host));
     }
 }

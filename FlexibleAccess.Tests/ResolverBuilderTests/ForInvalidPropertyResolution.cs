@@ -1,6 +1,6 @@
 ﻿using FlexibleAccess.Exceptions;
-using FlexibleAccess.Tests._StubTypes.InvalidCriteriaStub;
 using FlexibleAccess.Tests._StubTypes.StubHost;
+using FlexibleAccess.Tests._StubTypes.InvalidCriteriaStub;
 
 
 namespace FlexibleAccess.Tests.ResolverBuilderTests;
@@ -13,28 +13,40 @@ public abstract class ForInvalidPropertyResolution<TStubHost> where TStubHost : 
     [Fact]
     internal void ValueOfStaticProperty_Throws_OnInvalidCriteria()
     {
-        Assert.Throws<UnableToResolveException<TStubHost, string>>(
-            () => ResolverBuilder<TStubHost, StubCriteria_Static_InvalidProperty>.ValueOf<string>());
+        Assert.Throws<UnableToResolveException<TStubHost, string>>
+        (
+            () => ResolutionOn<TStubHost>.Using<StubCriteria_Static_InvalidProperty>()
+                                         .GetValueOf<string>()
+        );
     }
 
     [Fact]
     internal void NameOfStaticProperty_Throws_OnIvalidCriteria()
     {
-        Assert.Throws<UnableToResolveException<TStubHost, string>>(
-            () => ResolverBuilder<TStubHost, StubCriteria_Static_InvalidProperty>.NameOf<string>());
+        Assert.Throws<UnableToResolveException<TStubHost, string>>
+        (
+            () => ResolutionOn<TStubHost>.Using<StubCriteria_Static_InvalidProperty>()
+                                         .GetNameOf<string>()
+        );
     }
 
     [Fact]
     internal void ValueOfInstancedProperty_Throws_OnInvalidCriteria()
     {
-        Assert.Throws<UnableToResolveException<TStubHost, string>>(
-            () => ResolverBuilder<TStubHost, StubCriteria_Instanced_InvalidProperty>.ValueOf<string>());
+        Assert.Throws<UnableToResolveException<TStubHost, string>>
+        (
+            () => ResolutionOn<TStubHost>.Using<StubCriteria_Instanced_InvalidProperty>()
+                                         .GetValueOf<string>()
+        );
     }
 
     [Fact]
     internal void NameOfInstancedProperty_Throws_OnIvalidCriteria()
     {
-        Assert.Throws<UnableToResolveException<TStubHost, string>>(
-            () => ResolverBuilder<TStubHost, StubCriteria_Instanced_InvalidProperty>.NameOf<string>());
+        Assert.Throws<UnableToResolveException<TStubHost, string>>
+        (
+            () => ResolutionOn<TStubHost>.Using<StubCriteria_Instanced_InvalidProperty>()
+                                         .GetNameOf<string>()
+        );
     }
 }
