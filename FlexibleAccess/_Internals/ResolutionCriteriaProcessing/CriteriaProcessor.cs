@@ -5,12 +5,12 @@ namespace FlexibleAccess._Internals.ResolutionCriteriaProcessing;
 
 internal static class CriteriaProcessor<TCriteria> where TCriteria : struct, IResolutionCriteria
 {
-    internal static bool IndicatesOnTypeResolution() 
+    internal static bool IndicatesStaticResolution() 
     {
         return (new TCriteria().BindingFlags & BindingFlags.Static) == BindingFlags.Static;
     }
 
-    internal static bool IndicatesOnInstanceResolution()
+    internal static bool IndicatesInstancedResolution()
     {
         return (new TCriteria().BindingFlags & BindingFlags.Instance) == BindingFlags.Instance;
     }

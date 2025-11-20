@@ -1,6 +1,7 @@
 ﻿using FlexibleAccess.Exceptions;
 using FlexibleAccess.Tests._StubTypes;
 
+
 namespace FlexibleAccess.Tests.ExceptionsTests;
 
 public class ForInvalidEnumValueException

@@ -1,7 +1,7 @@
 ﻿using FlexibleAccess.Exceptions;
 using FlexibleAccess.Tests._StubTypes;
-using FlexibleAccess._Internals.MemberInfoRetrieval;
 using FlexibleAccess.Tests._StubTypes.StubHost;
+using FlexibleAccess._Internals.ReflectionHandling;
 
 
 namespace FlexibleAccess.Tests.InternalsTests;
@@ -13,7 +13,7 @@ public class ForMemberInfoRetrieval
     {
         var kind = MemberKind.Property;
         var expectedLogic = "GetProperty";
-        var calculatedRetievalLogic = MemberInfoRetrievalLogic.For<StubHost_ConcreteClass>(kind);
+        var calculatedRetievalLogic = GetMemberInfoLogic.For<StubHost_ConcreteClass>(kind);
 
         Assert.Equal(expectedLogic, calculatedRetievalLogic.Method.Name);
     }
@@ -23,7 +23,7 @@ public class ForMemberInfoRetrieval
     {
         var kind = MemberKind.Field;
         var expectedLogic = "GetField";
-        var calculatedRetievalLogic = MemberInfoRetrievalLogic.For<StubHost_ConcreteClass>(kind);
+        var calculatedRetievalLogic = GetMemberInfoLogic.For<StubHost_ConcreteClass>(kind);
 
         Assert.Equal(expectedLogic, calculatedRetievalLogic.Method.Name);
     }
@@ -33,7 +33,7 @@ public class ForMemberInfoRetrieval
     {
         Assert.Throws<InvalidEnumValueException<MemberKind>>
         (
-            () => MemberInfoRetrievalLogic.For<StubHost_ConcreteClass>((MemberKind)StubPrimitives.MemberKindEnum_InvalidValue)
+            () => GetMemberInfoLogic.For<StubHost_ConcreteClass>((MemberKind)StubPrimitives.MemberKindEnum_InvalidValue)
         );
     }
 }
