@@ -11,7 +11,7 @@ internal static class ExpressionHandler
 
     internal static ParameterExpression ResolutionDelegateParameter<THost>() => Expression.Parameter(typeof(THost), "host");
 
-    internal static MemberExpression MemberAccess<THost, TCriteria>(ParameterExpression member, MemberInfo memberInfo)
+    internal static MemberExpression MemberAccess<TCriteria>(ParameterExpression member, MemberInfo memberInfo)
         where TCriteria : struct, IResolutionCriteria
     {
         return CriteriaProcessor<TCriteria>.IndicatesStaticResolution() switch
