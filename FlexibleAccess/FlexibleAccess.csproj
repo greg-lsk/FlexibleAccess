@@ -9,4 +9,8 @@
 	<ItemGroup>
 		<InternalsVisibleTo Include="FlexibleAccess.Tests" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="ExceptionMessageSeparation" Version="1.0.0" />
+	</ItemGroup>
 </Project>

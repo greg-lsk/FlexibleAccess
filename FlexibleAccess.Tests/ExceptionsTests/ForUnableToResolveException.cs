@@ -1,7 +1,8 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using FlexibleAccess.Exceptions;
-using FlexibleAccess.Tests._StubTypes.StubHost;
 using FlexibleAccess.Tests._StubTypes.InvalidCriteriaStub;
+using FlexibleAccess.Tests._StubTypes.StubHost;
 
 
 namespace FlexibleAccess.Tests.ExceptionsTests;
@@ -49,13 +50,13 @@ public class ForUnableToResolveException
 
 
     private static string CreateMessage<THost, TResult>(string targetIdentifier, BindingFlags flags) =>
-    $"\n" +
-    $"reason:: {Reason()}\n" +
-    $"target:: {flags} {ShortenTypeOf<TResult>()} {targetIdentifier}\n" +
-    $"source:: {ShortenTypeOf<THost>()}\n" +
-    $"\n" +
-    $"target-verbose:: {typeof(TResult)}\n" +
-    $"source-verbose:: {typeof(THost)}\n";
+    $"{Environment.NewLine}" +
+    $"{Environment.NewLine}reason:: {Reason()}" +
+    $"{Environment.NewLine}target:: {flags} {ShortenTypeOf<TResult>()} {targetIdentifier}" +
+    $"{Environment.NewLine}source:: {ShortenTypeOf<THost>()}" +
+    $"{Environment.NewLine}target-verbose:: {typeof(TResult)}\n" +
+    $"{Environment.NewLine}source-verbose:: {typeof(THost)}\n";
+
 
     private static string Reason() => "Couldn't resolve Property";
     private static string ShortenTypeOf<T>() => typeof(T).Name.Split('.').Last();

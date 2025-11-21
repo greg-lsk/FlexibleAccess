@@ -15,7 +15,7 @@ internal class ResolutionOnClass<THost, TResult, TCriteria>
     public TResult Invoke()
     {
         if (CriteriaProcessor<TCriteria>.IndicatesInstancedResolution())
-            throw new MissingInstanceAtRuntimeException<THost, TCriteria>();
+            throw new MissingInstanceException<THost, TCriteria>();
 
         return Resolution(null);
     }
